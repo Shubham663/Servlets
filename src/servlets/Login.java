@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 	urlPatterns = {"/Login"},
 	initParams = {
 			@WebInitParam(name= "name",value = "Shubham"),
-			@WebInitParam(name = "password",value = "12345")
+			@WebInitParam(name = "password",value = "Shu%12bham")
 	}
 )
 public class Login extends HttpServlet{
@@ -28,6 +28,7 @@ public class Login extends HttpServlet{
 		String username = req.getParameter("name");
 		String passwrod = req.getParameter("password");
 		String nameRegex = "^[A-Z]{1}.{2,}$";
+		String PASSWORD_CHECK = "^(?=.*\\d)(?=.*[A-Z])(?=.*\\W)(?!.*\\W\\w*\\W)(?!.*\\s).{8,}$";
 		Pattern pattern = Pattern.compile(nameRegex);
 		Matcher matcher = pattern.matcher(username);
 		PrintWriter out = resp.getWriter();
@@ -35,6 +36,15 @@ public class Login extends HttpServlet{
 			RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
 			
 			out.println("<font color=red>Name does not match the required pattern</font>");
+			rd.include(req, resp);
+			return;
+		}
+		pattern = Pattern.compile(PASSWORD_CHECK);
+		matcher = pattern.matcher(passwrod);
+		if(!matcher.matches()) {
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
+			
+			out.println("<font color=red>Password does not match the required pattern</font>");
 			rd.include(req, resp);
 			return;
 		}
