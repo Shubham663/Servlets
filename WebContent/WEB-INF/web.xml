@@ -9,4 +9,17 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+  <servlet-name>Login</servlet-name>
+  <servlet-class>Login</servlet-class>
+  <init-param>
+  <param-name>name</param-name>
+  <param-value>Shubham</param-value>
+  </init-param>
+  <init-param>
+  <param-name>password</param-name>
+  <param-value>12345</param-value>
+  </init-param>
+  </servlet>
+  
 </web-app>
