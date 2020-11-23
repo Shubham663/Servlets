@@ -2,6 +2,8 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,10 +27,20 @@ public class Login extends HttpServlet{
 		resp.setContentType("text/html");
 		String username = req.getParameter("name");
 		String passwrod = req.getParameter("password");
+		String nameRegex = "^[A-Z]{1}.{2,}$";
+		Pattern pattern = Pattern.compile(nameRegex);
+		Matcher matcher = pattern.matcher(username);
+		PrintWriter out = resp.getWriter();
+		if(!matcher.matches()) {
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
+			
+			out.println("<font color=red>Name does not match the required pattern</font>");
+			rd.include(req, resp);
+			return;
+		}
 		String nameChecker = getServletConfig().getInitParameter("name");
 		String passwordChecker = getServletConfig().getInitParameter("password");
-		PrintWriter out = resp.getWriter();
-		if(username.equals(nameChecker) && passwrod.equals(passwordChecker)) {
+		if(username.equals(nameChecker) && passwrod.equals(passwordChecker)) {				
 			req.setAttribute("name", username);
 			req.getRequestDispatcher("LoginSuccess.jsp").forward(req, resp);
 		}
