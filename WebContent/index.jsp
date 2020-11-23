@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>My Jsp file</h1>
-	<form action="firstServlet" method="post">
+	<form action="Login" method="post">
 	Username <input type="text" name="name">
 	Password <input type="text" name="password">
 	<input type="submit" value="Login">
